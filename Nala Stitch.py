@@ -29,15 +29,13 @@ class Card:
 
 def compare(playerCard, pileCard):
     compatible = False
-    print(playerCard)
+    #print(playerCard)
     if (playerCard.getValue() == pileCard.getValue()):
-        print(playerCard.getValue())
-        print(pileCard.getValue())
         compatible = True
     elif (playerCard.getColor() == pileCard.getColor()):
         compatible = True
-    elif (playerCard.getValue() > 12):
-        compatible = True
+    #elif (playerCard.getValue() > 12):
+        #compatible = True
     else:
         compatible = False
     return compatible
@@ -47,29 +45,32 @@ def compare(playerCard, pileCard):
 #==================================================================================================
 
 def checkHand(playerHand, pileCard):
+    r = False
     for card in playerHand:
         #print(card)
         match = compare(card, pileCard)
         if(match == True):
             print('Hand Match')
-            return True
+            r = True
         else:
             print('No Hand Match')
-            return False
+    return r
 
 def generate_Card():
-        colors_list = ['Red', 'Blue', 'Green', 'Yellow', 'Special']
+        colors_list = ['Red', 'Blue', 'Green', 'Yellow']
         color = random.choice(colors_list)
         random_num = random.randrange(1, 10) #I eliminated wild cards 
-        number = 4
-        temp_color = "Red"
-        card = Card(temp_color, number)
+        #number = 4
+        #temp_color = "Red"
+        card = Card(color, random_num)
         return card
 
-def turn(player_hand, pileCard):#possibly import whose turn it is
+def turn(player_hand, pileCard, whichPlayer):#possibly import whose turn it is
     turnOver = False
+    print('Player', whichPlayer)
     print('Your Hand')
     [print(i, end = ' ') for i in player_hand]
+    print('\n The pile card is', pileCard)
     if checkHand(player_hand, pileCard) == True:
         while turnOver == False:
             chosenIndex = int(input('choose card to put down by index:'))
@@ -86,15 +87,14 @@ def turn(player_hand, pileCard):#possibly import whose turn it is
                 #print("card chosen doesn't match the pile")
                 turnOver = False
     else:
-        print('before add', player_hand)
+        #print('before add', player_hand)
         player_hand.append(generate_Card()) #player must take card and does not get a chance to put them down
         print('You have been forced to draw a card and it has been added to your hand')
-        print('after add', player_hand)
-        return player_hand
+        #print('after add', player_hand)
+        return pileCard
 
 #At some point turn function is run and returns the nextPileCard
 def main():
-#while(player_hand.length > 1):
     numPlayers = int(input("How many players are there? "))
     allHands = []
     for player in range(numPlayers):
@@ -107,9 +107,23 @@ def main():
         print('\n')
         allHands.append(player_hand)
     deckCard1 = generate_Card()
+    nextPileCard = 0
+    nextPileCard1 = 0
+    #nextPileCard2 = 0
+    """
+    whichPlayer = 1
     for player in allHands:
-        turn(player_hand, deckCard1)
-    return
+        nextPileCard = turn(player_hand, deckCard1, whichPlayer)
+        whichPlayer += 1
+    """
+    nextPileCard = deckCard1
+    while(len(player_hand) > 0):
+        whichPlayer = 1
+        for player in allHands:
+            nextPileCard1 = turn(player_hand, nextPileCard, whichPlayer)
+            whichPlayer += 1
+            nextPileCard = nextPileCard1
+    print("A player has gotten rid of all their cards and they have won. Game Over!!")
 
 #if __name__ == '__main__':
 main()
