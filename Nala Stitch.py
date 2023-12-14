@@ -1,13 +1,9 @@
 import random
-#def check_hand(player_card, pile_card):
-plus = 1
-
 #==================================================================================================
 #CARD CODE
 #==================================================================================================
 
 class Card:
-
     def __init__ (self, init_color, init_value):
         self.color = init_color
         self.value = init_value
@@ -24,33 +20,16 @@ class Card:
     def getValue (self):
         return self.value
     
-    def toString (self):
-        color = self.color
-        value = self.value
-        if self.value < 10:
-            name = color + " " + str(value)
-        elif value == 10:
-            name = color + " Skip"
-        elif value == 11:
-            name = color + " +2"
-        elif value == 13:
-            name = "Wild Card"
-        elif value == 14:
-            name = "+4 Card"
-        else:
-            name = "Something went wrong..."
-        
+    def __str__(self):
+        return f"{self.color}({self.value})"
+
 #==================================================================================================
 #COMPARE CARDS
 #==================================================================================================
 
 def compare(playerCard, pileCard):
     compatible = False
-    print("compare", playerCard.getValue())
-    print("compare", pileCard.getValue())
-    print("compare", playerCard.getColor())
-    print("compare", pileCard.getColor())
-    print(playerCard.toString())
+    print(playerCard)
     if (playerCard.getValue() == pileCard.getValue()):
         print(playerCard.getValue())
         print(pileCard.getValue())
@@ -61,8 +40,6 @@ def compare(playerCard, pileCard):
         compatible = True
     else:
         compatible = False
-    #if (playerCard.getValue() > 9):
-        #checkSpecial(playerCard)
     return compatible
     
 #==================================================================================================
@@ -80,25 +57,6 @@ def checkHand(playerHand, pileCard):
             print('No Hand Match')
             return False
 
-#def main():
-    #hand = [Card("Red", 5), ("Green", 'red'), (3, 'blue')]
-    #hand1 = [Card("Special", 13)]
-    #checkHand(hand1, Card("Red", 1))
-    #return
-#Testers    
-#compare((3, 'red'), (3, 'red'))
-
-#def checkSpecial(card):
-    #if(card[0] == 10):
-        #skip_tracker +=2
-    #if(card[0] == 11):
-        #plus = 2
-    #if(card[0] == 12):
-        #wild()
-    #if(card[0] == 13):
-        #plus = 4
-        #wild()
-
 def generate_Card():
         colors_list = ['Red', 'Blue', 'Green', 'Yellow', 'Special']
         color = random.choice(colors_list)
@@ -108,17 +66,15 @@ def generate_Card():
         card = Card(temp_color, number)
         return card
 
-def turn(player_hand, pileCard):
+def turn(player_hand, pileCard):#possibly import whose turn it is
     turnOver = False
     print('Your Hand')
-    for card in player_hand:
-        print(card.toString)
-    #print('Your Hand','\n',player_hand)
+    [print(i, end = ' ') for i in player_hand]
     if checkHand(player_hand, pileCard) == True:
         while turnOver == False:
             chosenIndex = int(input('choose card to put down by index:'))
             chosen = player_hand[chosenIndex]
-            print(chosen)
+            print('you chose', chosen)
             if compare(chosen, pileCard) == True:
                 nextPileCard = chosen
                 player_hand.pop(chosenIndex)
@@ -139,29 +95,21 @@ def turn(player_hand, pileCard):
 #At some point turn function is run and returns the nextPileCard
 def main():
 #while(player_hand.length > 1):
-    #numPlayers = int(input("How many players are there? "))
-    numPlayers = 2
+    numPlayers = int(input("How many players are there? "))
     allHands = []
     for player in range(numPlayers):
         player_hand = []
         for card in range(7): 
             card = generate_Card()
-            #card = ('Red', 2)
-            #card = ('Red', 2) #Prints something weird when I try to print card class
             player_hand.append(card)
-        print('Player', player,':',player_hand)
+        print('Player', player,':')
+        [print(i, end = ' ') for i in player_hand]
+        print('\n')
         allHands.append(player_hand)
     deckCard1 = generate_Card()
     for player in allHands:
         turn(player_hand, deckCard1)
     return
-"""
-def main():   
-    #fake_hand = [Card('Red', 2), Card('Red', 2), Card('Red', 2), Card('Red', 2), Card('Red', 2), Card('Red', 2), Card('Red', 2)]
-    fake_hand = [Card('Red', 2), Card('Blue', 3)]
-    fake_card = Card('Red', 2)
-    turn(fake_hand, fake_card)
-    return
-"""
-if __name__ == '__main__':
-    main()
+
+#if __name__ == '__main__':
+main()
