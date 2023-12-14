@@ -28,17 +28,17 @@ class Card:
         color = self.color
         value = self.value
         if self.value < 10:
-            return color + " " + str(value)
+            name = color + " " + str(value)
         elif value == 10:
-            return color + " Skip"
+            name = color + " Skip"
         elif value == 11:
-            return color + " +2"
+            name = color + " +2"
         elif value == 13:
-            return "Wild Card"
+            name = "Wild Card"
         elif value == 14:
-            return "+4 Card"
+            name = "+4 Card"
         else:
-            return "Something went wrong..."
+            name = "Something went wrong..."
         
 #==================================================================================================
 #COMPARE CARDS
@@ -61,8 +61,8 @@ def compare(playerCard, pileCard):
         compatible = True
     else:
         compatible = False
-    if (playerCard.getValue() > 9):
-        checkSpecial(playerCard)
+    #if (playerCard.getValue() > 9):
+        #checkSpecial(playerCard)
     return compatible
     
 #==================================================================================================
@@ -130,17 +130,17 @@ def main():
 
 def turn(player_hand, pileCard):
     turnOver = False
+    print('Your Hand')
     for card in player_hand:
         print(card.toString)
-    print('Your Hand','\n',player_hand)
+    #print('Your Hand','\n',player_hand)
     if checkHand(player_hand, pileCard) == True:
         while turnOver == False:
-            #chosen = input('choose card to put down:')
-            tempStep = input('placeholder for card input:')
-            chosen = (Card('Blue', 3))
+            chosenIndex = int(input('choose card to put down by index:'))
+            chosen = player_hand[chosenIndex]
+            print(chosen)
             if compare(chosen, pileCard) == True:
                 nextPileCard = chosen
-
                 turnOver = True
                 print('turn done')
                 return nextPileCard
@@ -157,7 +157,7 @@ def turn(player_hand, pileCard):
 
 def main():   
     #fake_hand = [Card('Red', 2), Card('Red', 2), Card('Red', 2), Card('Red', 2), Card('Red', 2), Card('Red', 2), Card('Red', 2)]
-    fake_hand = [Card('Blue', 3), Card('Blue', 3)]
+    fake_hand = [Card('Red', 2), Card('Blue', 3)]
     fake_card = Card('Red', 2)
     turn(fake_hand, fake_card)
     return
