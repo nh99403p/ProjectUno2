@@ -69,7 +69,6 @@ def compare(playerCard, pileCard):
 #COMPARE HAND TO PILE
 #==================================================================================================
 
-#player hand is list of tuples
 def checkHand(playerHand, pileCard):
     for card in playerHand:
         #print(card)
@@ -82,7 +81,6 @@ def checkHand(playerHand, pileCard):
             return False
 
 #def main():
-
     #hand = [Card("Red", 5), ("Green", 'red'), (3, 'blue')]
     #hand1 = [Card("Special", 13)]
     #checkHand(hand1, Card("Red", 1))
@@ -109,24 +107,6 @@ def generate_Card():
         temp_color = "Red"
         card = Card(temp_color, number)
         return card
-"""
-def main():
-    #numPlayers = int(input("How many players are there? "))
-    numPlayers = 2
-    for player in range(numPlayers):
-        player_hand = []
-        for player in range(7): 
-            #card = Generate_Card()
-            #card = ('Red', 2)
-            card = ('Red', 2) #Prints something weird when I try to print card class
-            player_hand.append(card)
-        print(player_hand)
-    deckCard1 = Generate_Card()
-    while(player_hand.length > 1):
-
-    return
-"""
-
 
 def turn(player_hand, pileCard):
     turnOver = False
@@ -141,6 +121,7 @@ def turn(player_hand, pileCard):
             print(chosen)
             if compare(chosen, pileCard) == True:
                 nextPileCard = chosen
+                player_hand.pop(chosenIndex)
                 turnOver = True
                 print('turn done')
                 return nextPileCard
@@ -155,13 +136,32 @@ def turn(player_hand, pileCard):
         print('after add', player_hand)
         return player_hand
 
+#At some point turn function is run and returns the nextPileCard
+def main():
+#while(player_hand.length > 1):
+    #numPlayers = int(input("How many players are there? "))
+    numPlayers = 2
+    allHands = []
+    for player in range(numPlayers):
+        player_hand = []
+        for card in range(7): 
+            card = generate_Card()
+            #card = ('Red', 2)
+            #card = ('Red', 2) #Prints something weird when I try to print card class
+            player_hand.append(card)
+        print('Player', player,':',player_hand)
+        allHands.append(player_hand)
+    deckCard1 = generate_Card()
+    for player in allHands:
+        turn(player_hand, deckCard1)
+    return
+"""
 def main():   
     #fake_hand = [Card('Red', 2), Card('Red', 2), Card('Red', 2), Card('Red', 2), Card('Red', 2), Card('Red', 2), Card('Red', 2)]
     fake_hand = [Card('Red', 2), Card('Blue', 3)]
     fake_card = Card('Red', 2)
     turn(fake_hand, fake_card)
     return
-
-#How are the cards in the hand labeled, and what does the player type in to select a card
+"""
 if __name__ == '__main__':
     main()
