@@ -56,15 +56,19 @@ def checkHand(playerHand, pileCard):
             print('No Hand Match')
     return r
 
+#==================================================================================================
+#GENERATE'S A RANDOM CARD
+#==================================================================================================
 def generate_Card():
         colors_list = ['Red', 'Blue', 'Green', 'Yellow']
         color = random.choice(colors_list)
         random_num = random.randrange(1, 10) #I eliminated wild cards 
-        #number = 4
-        #temp_color = "Red"
         card = Card(color, random_num)
         return card
 
+#==================================================================================================
+#A PLAYER'S TURN
+#==================================================================================================
 def turn(player_hand, pileCard, whichPlayer):#possibly import whose turn it is
     turnOver = False
     print('Player', whichPlayer)
@@ -84,14 +88,15 @@ def turn(player_hand, pileCard, whichPlayer):#possibly import whose turn it is
                 return nextPileCard
             else:
                 print('compare denied')
-                #print("card chosen doesn't match the pile")
                 turnOver = False
     else:
-        #print('before add', player_hand)
         player_hand.append(generate_Card()) #player must take card and does not get a chance to put them down
         print('You have been forced to draw a card and it has been added to your hand')
-        #print('after add', player_hand)
         return pileCard
+
+#==================================================================================================
+#MAIN
+#==================================================================================================
 
 #At some point turn function is run and returns the nextPileCard
 def main():
@@ -109,13 +114,7 @@ def main():
     deckCard1 = generate_Card()
     nextPileCard = 0
     nextPileCard1 = 0
-    #nextPileCard2 = 0
-    """
-    whichPlayer = 1
-    for player in allHands:
-        nextPileCard = turn(player_hand, deckCard1, whichPlayer)
-        whichPlayer += 1
-    """
+   
     nextPileCard = deckCard1
     while(len(player_hand) > 0):
         whichPlayer = 1
